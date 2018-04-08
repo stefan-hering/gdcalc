@@ -1,0 +1,32 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "experimentalDecorators": true,
+        "allowJs": true,
+        "jsx": "react",
+        "typeRoots": [
+            "src",
+            "./node_modules/@types"
+        ],
+        "lib" : [ "es6","dom" ],
+        "baseUrl": "src",
+        "sourceMap": true,
+        "types": [
+            "node", "mocha", "chai"
+        ],
+        "outDir": "dist"
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/parser/jison-parser.js",
+        "test/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules/**"
+    ]
+}
