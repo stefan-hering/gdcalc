@@ -12,6 +12,7 @@ module.exports = {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist/webui")
     },
+    mode: "development",
     
     // Add the loader for .ts files.
     module: {

@@ -22,7 +22,8 @@
     "mocha-typescript": "^1.1.12",
     "nyc": "^11.6.0",
     "ts-node": "^5.0.1",
-    "webpack": "^4.5.0"
+    "webpack": "^4.5.0",
+    "x3dom": "^1.7.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.0.0",
