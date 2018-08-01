@@ -1,28 +1,33 @@
-import {Attack,Attacker,Defender,DamageType} from 'model';
+import {Attack,Attacker,Defender,DamageType,DamageInstance} from './model';
 
 /**
  * PTH formula taken from http://grimdawn.com/guide/gameplay/combat.php#q19
+ * 
+ * Capped at 66 since 1.0.6.0
+ * 
  * @param oa Offensive ability of attack
  * @param da Defensive ability of attackee
  * @returns the probability to hit the enemy
  */
 let probabilityToHit = (oa:number, da:number) => {
-    return ((((oa / ((da / 3.5) + oa)) * 300) * 0.3) + (((((oa * 3.25) + 10000) - (da * 3.25)) / 100) * 0.7)) - 50;
+    return Math.max(66,
+            ((((oa / ((da / 3.5) + oa)) * 300) * 0.3) + (((((oa * 3.25) + 10000) - (da * 3.25)) / 100) * 0.7)) - 50);
 }
 
 /**
  * Calculate a miss or a hit
+ * @param roll Random roll between 0 and 1
  * @param probabilityToHit from the pth formula
  * @param critDamage +crit damage bonus from attacker
  * @returns the damage modifier for this attack, 0 for miss
  */
-let calculateHit : (pth:number, critDamage:number) => number
-    = (probabilityToHit:number, critDamage:number) => {
+let calculateHitRoll : (roll:number, pth:number, critDamage:number) => number
+    = (roll:number, probabilityToHit:number, critDamage:number) => {
     let hitRoll: number;
     if(probabilityToHit < 100) {
-        hitRoll = Math.random() * 100;
+        hitRoll = roll * 100;
     } else {
-        hitRoll = Math.random() * probabilityToHit;
+        hitRoll = roll * probabilityToHit;
     }
     if(hitRoll > probabilityToHit) {
         return 0;
@@ -48,12 +53,51 @@ let calculateHit : (pth:number, critDamage:number) => number
     return 1.5 + critDamage;
 }
 
+let calculateDamageTaken = (damage:DamageInstance, defender:Defender) => {
+    // Not calculated: different armor pieces, chance to hit, fumble, % damage from x...
+    let damageValue = damage.value;
+    if(damage.type == DamageType.PHYISCAL) {
+        if(defender.armor > damageValue) {
+            damageValue = damageValue * defender.armorAbsorbtion;
+        } else {
+            damageValue = damageValue - defender.armor + defender.armor * (1 - defender.armorAbsorbtion)
+        }
+    }
+    return damageValue
+            * defender.resistance[damage.type] 
+            * defender.percentAbsorbtion
+            - defender.flatAbsorbtion;
+}
+
+let calculateDamage = (attacker:Attacker, defender:Defender, attack:Attack, hitRoll:number) => {
+    let totalDamage = 0;
+    for(let damage of attack.damage) {
+        totalDamage += 
+            calculateDamageTaken({
+                value: attacker.percentageDamageBonus[damage.type] * damage.value * hitRoll,
+                type: damage.type
+            },defender);
+    }
+    if(attack.weaponDamage > 0) {
+        attacker.flatDamage.forEach(
+            (damageType, number) => {
+            totalDamage += 
+                calculateDamageTaken({
+                    value: attacker.percentageDamageBonus[damageType] *
+                        attacker.flatDamage[damageType] *
+                        attack.weaponDamage * hitRoll,
+                    type: damageType
+                },defender)});
+    }
+}
+
 /**
  * Source: http://www.grimdawn.com/forums/showthread.php?t=36471
  * @param weaponModifier 
+ * @param attackSpeedBonus 
  */
 let attackPerSecond = (weaponModifier:number, attackSpeedBonus) => {
     return (1 + weaponModifier) + (1 - weaponModifier) * attackSpeedBonus;
 }
 
-export {probabilityToHit,attackPerSecond};
+export {probabilityToHit,attackPerSecond,calculateHitRoll,calculateDamage,calculateDamageTaken};

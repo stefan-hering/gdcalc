@@ -2,24 +2,30 @@
 interface Attacker {
     offensiveAbility: number
     critDamage: number
-    damageType: DamageType
-    percentageDamageBonus: {DamageType:number}
-    durationBonus: {DamageType:number}
-    flatDamage: {DamageType:number}
+    percentageDamageBonus: Map<DamageType,number>
+    durationBonus: Map<DamageType,number>
+    flatDamage: Map<DamageType,number>
     weaponSpeed: number
     attackSpeed: number
 }
 
 interface Attack {
-    damage: [{DamageType:number}]
+    damage: DamageInstance[]
     weaponDamage: number 
+}
+
+interface DamageInstance {
+    type: DamageType
+    value: number
 }
 
 interface Defender {
     armor: number
     armorAbsorbtion: number
     defensiveAbility: number
-    absorbtion: number
+    resistance: Map<DamageType,number>
+    percentAbsorbtion: number
+    flatAbsorbtion: number
 }
 
 enum DamageType {
@@ -40,4 +46,4 @@ enum DamageType {
     CHAOS
 }
 
-export {Attacker, Attack, Defender, DamageType}
+export {Attacker, Attack, Defender, DamageType, DamageInstance}

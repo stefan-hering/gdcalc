@@ -1,1 +1,2 @@
-# Grim Dawn utilities
+# Grim Dawn calculator
+
