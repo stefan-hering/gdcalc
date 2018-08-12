@@ -63,32 +63,36 @@ let calculateDamageTaken = (damage:DamageInstance, defender:Defender) => {
             damageValue = damageValue - defender.armor + defender.armor * (1 - defender.armorAbsorbtion)
         }
     }
+
     return damageValue
-            * defender.resistance[damage.type] 
-            * defender.percentAbsorbtion
+            * (1 - defender.resistance[damage.type])
+            * (1 - defender.percentAbsorbtion)
             - defender.flatAbsorbtion;
 }
 
 let calculateDamage = (attacker:Attacker, defender:Defender, attack:Attack, hitRoll:number) => {
     let totalDamage = 0;
+
     for(let damage of attack.damage) {
         totalDamage += 
             calculateDamageTaken({
-                value: attacker.percentageDamageBonus[damage.type] * damage.value * hitRoll,
+                value: (1 + attacker.percentageDamageBonus[damage.type]) * damage.value * hitRoll,
                 type: damage.type
             },defender);
     }
+
     if(attack.weaponDamage > 0) {
-        attacker.flatDamage.forEach(
-            (damageType, number) => {
+        for(let damageType in attacker.flatDamage) {
             totalDamage += 
                 calculateDamageTaken({
-                    value: attacker.percentageDamageBonus[damageType] *
-                        attacker.flatDamage[damageType] *
+                    value: attacker.percentageDamageBonus[damageType as DamageType] *
+                        attacker.flatDamage[damageType as DamageType] *
                         attack.weaponDamage * hitRoll,
-                    type: damageType
-                },defender)});
+                    type: damageType as DamageType
+                },defender);
+        }
     }
+    return totalDamage;
 }
 
 /**

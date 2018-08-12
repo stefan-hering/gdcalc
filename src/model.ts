@@ -2,9 +2,9 @@
 interface Attacker {
     offensiveAbility: number
     critDamage: number
-    percentageDamageBonus: Map<DamageType,number>
-    durationBonus: Map<DamageType,number>
-    flatDamage: Map<DamageType,number>
+    percentageDamageBonus: {DamageType:number}
+    durationBonus: {DamageType:number}
+    flatDamage: {DamageType:number}
     weaponSpeed: number
     attackSpeed: number
 }
@@ -23,27 +23,27 @@ interface Defender {
     armor: number
     armorAbsorbtion: number
     defensiveAbility: number
-    resistance: Map<DamageType,number>
+    resistance: {DamageType:number}
     percentAbsorbtion: number
     flatAbsorbtion: number
 }
 
 enum DamageType {
-    PHYISCAL,
-    INTERNAL_TRAUMA,
-    FIRE,
-    BURN,
-    COLD,
-    FROSTBURN,
-    LIGHTNING,
-    ELECTROCUTE,
-    ACID,
-    POISON,
-    BLEED,
-    VITALITY,
-    VITALITY_DECAY,
-    AETHER,
-    CHAOS
+    PHYISCAL = "Physical",
+    INTERNAL_TRAUMA = "Internal trauma",
+    FIRE = "Fire",
+    BURN = "Burn",
+    COLD = "Cold",
+    FROSTBURN = "Frostburn",
+    LIGHTNING = "Lightning",
+    ELECTROCUTE = "Electrocute",
+    ACID = "Acid",
+    POISON = "Poison",
+    BLEED = "Bleed",
+    VITALITY = "Vitality",
+    VITALITY_DECAY= "Vitality decay",
+    AETHER = "Aether",
+    CHAOS = "Chaos"
 }
 
 export {Attacker, Attack, Defender, DamageType, DamageInstance}
