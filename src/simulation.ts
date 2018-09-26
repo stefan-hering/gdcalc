@@ -1,19 +1,23 @@
 import {calculateDamage,calculateHitRoll, probabilityToHit} from './formulas';
 import {Attack, Attacker, DamageType, Defender, } from './model';
 
+interface Simulation {
+    attacker: Attacker
+    attack : Attack
+    defender: Defender
+    attacks : number
+}
 
-
-let simulate = (attacker:Attacker, defender:Defender, attack: Attack) => {
+let simulate = (s : Simulation) => {
     let totalDamage = 0;
 
-    for(let i = 0; i < 5000; i ++) {
+    for(let i = 0; i < s.attacks; i ++) {
         let hitRoll = calculateHitRoll(Math.random(),
-            probabilityToHit(attacker.offensiveAbility, defender.defensiveAbility),
-            attacker.critDamage);
+            probabilityToHit(s.attacker.offensiveAbility, s.defender.defensiveAbility),
+            s.attacker.critDamage);
         
-        totalDamage += calculateDamage(attacker, defender, attack, hitRoll);
+        totalDamage += calculateDamage(s.attacker, s.defender, s.attack, hitRoll);
     }
-    console.log(totalDamage);
     return totalDamage;
 }
 

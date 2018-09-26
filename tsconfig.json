@@ -24,7 +24,7 @@
     "include": [
         "src/**/*.ts",
         "src/parser/jison-parser.js",
-        "test/**/*.ts"
+        "test/**/*.ts", "src/ui/attacker.tsx"
     ],
     "exclude": [
         "node_modules/**"
