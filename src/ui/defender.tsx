@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import * as React from 'react';
 import {Defender, DamageType} from '../model';
 
 interface DefenderData {
@@ -7,21 +6,13 @@ interface DefenderData {
     resistance : number
 }
 
-export class DefenderInputs extends React.Component<DefenderData,any> {
+export class DefenderInputs extends React.Component<DefenderData,DefenderData> {
     constructor(props : DefenderData) {
         super(props);
         this.state = {
-            defender : props.defender
+            defender : props.defender,
+            resistance : 100
         }
-    }
-
-    calculate = () => {
-    }
-
-    onChange = (event : any) => {
-        let defender = this.state.defender;
-        defender[event.target.name] = Number(event.target.value);
-        this.setState({defender: defender});
     }
 
     onChangeResistance = (event : any) => {
@@ -34,6 +25,12 @@ export class DefenderInputs extends React.Component<DefenderData,any> {
         this.setState({defender: defender});
     }
 
+    onChange = (event : any) => {
+        let defender = this.state.defender;
+        defender[event.target.name] = Number(event.target.value);
+        this.setState({defender: defender});
+    }
+
     render() {
         return (
         <div className="row">
@@ -42,7 +39,7 @@ export class DefenderInputs extends React.Component<DefenderData,any> {
                 <input id="armor" 
                     name="armor" 
                     type="number" 
-                    value={this.state.armor} 
+                    value={this.state.defender.armor} 
                     onChange={this.onChange} />
                 <label htmlFor="armor">Armor</label>
             </div>

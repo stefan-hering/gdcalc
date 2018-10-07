@@ -35,8 +35,6 @@ class DamageGraph extends React.Component<any,any> {
         this.height = +svg.attr("height") - margin.top - margin.bottom,
         this.g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        
-
         this.x = d3.scaleLinear().rangeRound([0, this.width]);
         this.y = d3.scaleLinear().rangeRound([this.height, 0]);
         this.line = d3.line()
