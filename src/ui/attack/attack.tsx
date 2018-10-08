@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {Attack} from '../../model';
-import {DamageInstanceComponent} from './damageinstance';
+import * as React from "react";
+import {Attack} from "../../model";
+import {DamageInstanceComponent} from "./damageinstance";
 
 interface AttackData {
     attack: Attack;

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {Defender, DamageType} from '../model';
+import * as React from "react";
+import {Defender, DamageType} from "../model";
 
 interface DefenderData {
     defender: Defender
@@ -17,12 +17,13 @@ export class DefenderInputs extends React.Component<DefenderData,DefenderData> {
 
     onChangeResistance = (event : any) => {
         let defender = this.state.defender;
-        
+        let newResi = Number(event.target.value);
+
         for (let type in DamageType) {
-            defender.resistance[type] = event.target.value;
+            defender.resistance[type] = newResi;
         }
 
-        this.setState({defender: defender});
+        this.setState({resistance : newResi,defender: defender});
     }
 
     onChange = (event : any) => {

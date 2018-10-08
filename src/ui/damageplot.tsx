@@ -1,10 +1,10 @@
-import {DamageGraph} from './graph'
-import {AttackerInputs} from './attacker'
-import {DefenderInputs} from './defender'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import {Attacker,Defender,DamageType} from '../model';
-import {simulate} from '../simulation';
+import {DamageGraph} from "./graph"
+import {AttackerInputs} from "./attacker"
+import {DefenderInputs} from "./defender"
+import * as React from "react"
+import * as ReactDOM from "react-dom"
+import {Attacker,Defender,DamageType} from "../model";
+import {simulate} from "../simulation";
 
 interface PlotterData {
     attacker : Attacker
@@ -24,15 +24,15 @@ class DamagePlotter extends React.Component<PlotterData,any> {
         }
     }
 
+    clear = () => {
+        this.graph.clear();
+    }
+
     createGraph = () => {
         let values = [];
 
         let attacker = JSON.parse(JSON.stringify(this.state.attacker));
         let defender = JSON.parse(JSON.stringify(this.state.defender));
-
-        console.log(attacker);
-        console.log(defender);
-
 
         for(let i = 0; i < 350; i++) {
             let oa = 500 + 10 * i;
@@ -46,7 +46,6 @@ class DamagePlotter extends React.Component<PlotterData,any> {
             })
         }
 
-        //this.setState({data : values});
         this.graph.doChart(values);
     }
 
@@ -57,6 +56,7 @@ class DamagePlotter extends React.Component<PlotterData,any> {
                 <DamageGraph data={this.state.data} ref={graph => {this.graph = graph}} />
                 <input name="" />
                 <button onClick={this.createGraph}>Plot</button>
+                <button onClick={this.clear}>Clear</button>
             </div>
     }
 }

@@ -1,10 +1,10 @@
 import * as React from "react";
-import * as d3 from 'd3';
+import * as d3 from "d3";
 
 class DamageGraph extends React.Component<any,any> {
     x;
     y;
-    data;
+    data = [];
     line;
     height;
     width;
@@ -19,17 +19,20 @@ class DamageGraph extends React.Component<any,any> {
         }
     }
 
-    setData = (data) => {
-        this.data = data;
+    clear = () => {
+        this.data = [];
+        d3.select(this.node()).selectAll("*").remove();
     }
 
-    doChart = (data) => {
-        if( ! data) {
+    doChart = (line) => {
+        if( ! line) {
             return;
         }
-        this.data = data;
+        this.data.push(line);
 
         var svg = d3.select(this.node);
+        svg.selectAll("*").remove();
+
         var margin = {top: 20, right: 20, bottom: 20, left: 80};
         this.width = +svg.attr("width") - margin.left - margin.right,
         this.height = +svg.attr("height") - margin.top - margin.bottom,
@@ -42,17 +45,29 @@ class DamageGraph extends React.Component<any,any> {
             .x((d:any) => { return this.x(d.OA); })
             .y((d:any) => { return this.y(d.dps); });
 
+        this.x.domain(
+            [d3.min(this.data, function(d:any) { 
+                return d3.min(d, function(d:any) { return parseInt(d.OA, 10); }); 
+            }), 
+            d3.max(this.data, function(d:any) { 
+                return d3.max(d, function(d:any) { return parseInt(d.OA, 10); }); 
+            })]);
+        this.y.domain(
+            [d3.min(this.data, function(d:any) { 
+                return d3.min(d, function(d:any) { return parseInt(d.dps, 10); }); 
+            }), 
+            d3.max(this.data, function(d:any) { 
+                return d3.max(d, function(d:any) { return parseInt(d.dps, 10); }); 
+            })]);
 
-        this.x.domain(d3.extent(this.data, function(d:any) { return parseInt(d.OA,10); }));
-        this.y.domain([d3.min(this.data, function(d:any) { return parseInt(d.dps, 10); }), 
-            d3.max(this.data, function(d:any) { return parseInt(d.dps, 10); })]);
-
+        for(let dataRow of this.data) {
         this.g.append("path")
-            .datum(this.data)
+            .datum(dataRow)
             .attr("fill", "none")
             .style("stroke","#181818")
             .style("stroke-width","4px")
             .attr("d", this.line);
+        }
 
         this.g.append("g")
             .attr("transform", "translate(0," + this.height + ")")

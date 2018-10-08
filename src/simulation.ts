@@ -1,5 +1,5 @@
-import {calculateDamage,calculateHitRoll, probabilityToHit} from './formulas';
-import {Attack, Attacker, DamageType, Defender, } from './model';
+import {calculateDamage,calculateHitRoll, probabilityToHit} from "./formulas";
+import {Attack, Attacker, DamageType, Defender, } from "./model";
 
 interface Simulation {
     attacker: Attacker

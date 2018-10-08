@@ -1,4 +1,4 @@
-import {Attack,Attacker,Defender,DamageType,DamageInstance} from './model';
+import {Attack,Attacker,Defender,DamageType,DamageInstance} from "./model";
 
 /**
  * PTH formula taken from http://grimdawn.com/guide/gameplay/combat.php#q19

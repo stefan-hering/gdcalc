@@ -1,5 +1,5 @@
-import {Attacker, Defender, DamageType} from './model';
-import damageplot from './ui/damageplot'
+import {Attacker, Defender, DamageType} from "./model";
+import damageplot from "./ui/damageplot"
 
 
 require("./index.html");

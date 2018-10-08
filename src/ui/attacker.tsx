@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Attacker} from '../model';
+import {Attacker} from "../model";
 
 interface AttackerData {
     attacker: Attacker;
