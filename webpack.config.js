@@ -7,7 +7,7 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
-    entry: "./src/ui.ts",
+    entry: "./src/ui/ui.ts",
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist/webui")

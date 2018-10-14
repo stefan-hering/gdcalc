@@ -1,6 +1,5 @@
-import {Attacker, Defender, DamageType} from "./model";
-import damageplot from "./ui/damageplot"
-
+import {Attacker, Defender, DamageType} from "../model";
+import damageplot from "./damageplot"
 
 require("./index.html");
 
@@ -24,9 +23,9 @@ let defender:Defender = {
 }
 
 for (let type in DamageType) {
-    attacker.percentageDamageBonus[DamageType[type] as DamageType] = 0;
-    attacker.flatDamage[DamageType[type] as DamageType] = 0;
-    defender.resistance[DamageType[type] as DamageType] = .18;
+    attacker.percentageDamageBonus[DamageType[type]] = 0;
+    attacker.flatDamage[DamageType[type]] = 0;
+    defender.resistance[DamageType[type]] = .18;
 }
 
 damageplot({attacker: attacker,defender :defender});

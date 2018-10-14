@@ -28,6 +28,14 @@ interface Defender {
     flatAbsorbtion: number
 }
 
+interface Simulation {
+    attacker : Attacker
+    attack : Attack,
+    defender : Defender,
+    time : number,
+    attacks : number
+}
+
 enum DamageType {
     PHYISCAL = "Physical",
     INTERNAL_TRAUMA = "Internal trauma",
@@ -46,4 +54,4 @@ enum DamageType {
     CHAOS = "Chaos"
 }
 
-export {Attacker, Attack, Defender, DamageType, DamageInstance}
+export {Attacker, Attack, Defender, DamageType, DamageInstance, Simulation}

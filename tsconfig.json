@@ -13,7 +13,7 @@
             "src",
             "./node_modules/@types"
         ],
-        "lib" : [ "es6","dom" ],
+        "lib" : [ "es6","webworker","dom" ],
         "baseUrl": "src",
         "sourceMap": true,
         "types": [

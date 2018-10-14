@@ -3,7 +3,8 @@ import {Defender, DamageType} from "../model";
 
 interface DefenderData {
     defender: Defender
-    resistance : number
+    resistance : number,
+    absorbtion : number
 }
 
 export class DefenderInputs extends React.Component<DefenderData,DefenderData> {
@@ -11,19 +12,26 @@ export class DefenderInputs extends React.Component<DefenderData,DefenderData> {
         super(props);
         this.state = {
             defender : props.defender,
-            resistance : 100
+            resistance : props.resistance,
+            absorbtion : props.defender.percentAbsorbtion * 100
         }
     }
 
     onChangeResistance = (event : any) => {
         let defender = this.state.defender;
-        let newResi = Number(event.target.value);
+        let newResi = Number(event.target.value) / 100;
 
         for (let type in DamageType) {
-            defender.resistance[type] = newResi;
+            defender.resistance[DamageType[type]] = newResi;
         }
 
-        this.setState({resistance : newResi,defender: defender});
+        this.setState({resistance : Number(event.target.value),defender: defender});
+    }
+
+    onChangeAbsorb = (event : any) => {
+        let defender = this.state.defender;
+        defender.percentAbsorbtion = Number(event.target.value) / 100;
+        this.setState({absorbtion : Number(event.target.value), defender});
     }
 
     onChange = (event : any) => {
@@ -72,8 +80,8 @@ export class DefenderInputs extends React.Component<DefenderData,DefenderData> {
                 <input id="percentAbsorbtion" 
                     name="percentAbsorbtion" 
                     type="number" 
-                    value={this.state.defender.percentAbsorbtion} 
-                    onChange={this.onChange} />
+                    value={this.state.absorbtion} 
+                    onChange={this.onChangeAbsorb} />
                 <label htmlFor="percentAbsorbtion">Percentage absorbtion</label>
             </div>
             <div className="input-field col">

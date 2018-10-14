@@ -3,8 +3,10 @@ import {AttackerInputs} from "./attacker"
 import {DefenderInputs} from "./defender"
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-import {Attacker,Defender,DamageType} from "../model";
+import {Attacker,Defender,DamageType,Simulation} from "../model";
 import {simulate} from "../simulation";
+
+import CalculationWorker = require("worker-loader?name=dist/[name].js!./worker");
 
 interface PlotterData {
     attacker : Attacker
@@ -29,30 +31,27 @@ class DamagePlotter extends React.Component<PlotterData,any> {
     }
 
     createGraph = () => {
-        let values = [];
+        let worker = new CalculationWorker();
 
-        let attacker = JSON.parse(JSON.stringify(this.state.attacker));
-        let defender = JSON.parse(JSON.stringify(this.state.defender));
-
-        for(let i = 0; i < 350; i++) {
-            let oa = 500 + 10 * i;
-            attacker.offensiveAbility = oa;
-            values.push({
-                "OA" : oa,
-                "dps" : simulate({attacker:attacker,
-                    defender:defender,
-                    attack:{damage : [{type : DamageType.CHAOS, value:100}], weaponDamage: 0}, 
-                    attacks : 20000})
-            })
+        let sim : Simulation = {
+            attacker : JSON.parse(JSON.stringify(this.state.attacker)),
+            defender : JSON.parse(JSON.stringify(this.state.defender)),
+            attack : {damage : [{type : DamageType.CHAOS, value:100}], weaponDamage: 0},
+            time : 3000,
+            attacks : 2000
         }
+        worker.onmessage = (ev: MessageEvent) => {
+            this.graph.doChart(ev.data);
+            worker.terminate();
+        };
 
-        this.graph.doChart(values);
+        worker.postMessage(sim);
     }
 
     render() {
         return <div>
                 <AttackerInputs attacker={this.state.attacker} />
-                <DefenderInputs defender={this.state.defender} resistance={16} />
+                <DefenderInputs defender={this.state.defender} resistance={16} absorbtion={0} />
                 <DamageGraph data={this.state.data} ref={graph => {this.graph = graph}} />
                 <input name="" />
                 <button onClick={this.createGraph}>Plot</button>

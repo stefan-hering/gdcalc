@@ -64,10 +64,12 @@ let calculateDamageTaken = (damage:DamageInstance, defender:Defender) => {
         }
     }
 
-    return damageValue
+    let value = damageValue
             * (1 - defender.resistance[damage.type])
             * (1 - defender.percentAbsorbtion)
             - defender.flatAbsorbtion;
+
+    return Math.max(0, value);
 }
 
 let calculateDamage = (attacker:Attacker, defender:Defender, attack:Attack, hitRoll:number) => {
