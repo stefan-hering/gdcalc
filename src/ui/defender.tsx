@@ -1,5 +1,5 @@
-import * as React from "react";
-import {Defender, DamageType} from "../model";
+import * as React from "react"
+import {Defender, DamageType} from "../model"
 
 interface DefenderData {
     defender: Defender

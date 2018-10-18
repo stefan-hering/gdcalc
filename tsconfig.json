@@ -23,8 +23,8 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/parser/jison-parser.js",
-        "test/**/*.ts", "src/ui/attacker.tsx", "src/ui/inputcomponent.tsx", "src/ui/attack/damageinstance.tsx", "src/ui/attack/attack.tsx"
+        "src/**/*.tsx",
+        "test/**/*.ts"
     ],
     "exclude": [
         "node_modules/**"

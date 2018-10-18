@@ -1,7 +1,9 @@
-import {Attacker, Defender, DamageType} from "../model";
+import {Attacker, Defender, DamageType} from "../model"
 import damageplot from "./damageplot"
 
-require("./index.html");
+const matcss = require("../../node_modules/materialize-css/dist/css/materialize.min.css")
+const matjs = require("../../node_modules/materialize-css/dist/js/materialize.min.js")
+const index = require("./index.html")
 
 let attacker:Attacker = {
     offensiveAbility : 2500,
@@ -28,4 +30,5 @@ for (let type in DamageType) {
     defender.resistance[DamageType[type]] = .18;
 }
 
-damageplot({attacker: attacker,defender :defender});
+damageplot({attacker: attacker,defender :defender, attacks : []});
+ 
