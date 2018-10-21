@@ -43,7 +43,7 @@ export class DefenderInputs extends React.Component<DefenderData,DefenderData> {
     render() {
         return (
         <div className="row">
-            <h6>Defender</h6>
+            <h6 className="col s12">Defender</h6>
             <div className="input-field col">
                 <input id="armor" 
                     name="armor" 

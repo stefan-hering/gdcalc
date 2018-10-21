@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Attack} from "../../model"
+import {Attack,DamageType} from "../../model"
 import {DamageInstanceComponent} from "./damageinstance"
 
 interface AttackData {
@@ -22,7 +22,7 @@ export class AttackInputs extends React.Component<AttackData,AttackData> {
 
     addDamageInstance = () => {
         let attack = this.state.attack;
-        attack.damage.push({type: null,value : 0});
+        attack.damage.push({type: DamageType.PHYISCAL,value : 2000});
         this.setState({attack : attack});
     }
 
@@ -30,7 +30,7 @@ export class AttackInputs extends React.Component<AttackData,AttackData> {
         let instances = [];
         let counter = 0;
         for(let damageInstance of this.state.attack.damage) {
-            instances.push(<DamageInstanceComponent key={counter} instance={damageInstance}></DamageInstanceComponent>)
+            instances.push(<DamageInstanceComponent key={counter++} instance={damageInstance}></DamageInstanceComponent>);
         }
 
         return (

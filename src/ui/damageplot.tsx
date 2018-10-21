@@ -24,7 +24,8 @@ class DamagePlotter extends React.Component<PlotterData,any> {
             attacker : props.attacker,
             defender : props.defender,
             attacks : props.attacks,
-            data : props.data
+            data : props.data,
+            time : 2000
         }
     }
 
@@ -38,10 +39,10 @@ class DamagePlotter extends React.Component<PlotterData,any> {
         let sim : Simulation = {
             attacker : JSON.parse(JSON.stringify(this.state.attacker)),
             defender : JSON.parse(JSON.stringify(this.state.defender)),
-            attack : {damage : [{type : DamageType.CHAOS, value:100}], weaponDamage: 0},
-            time : 3000,
-            attacks : 2000
-        }
+            attacks : JSON.parse(JSON.stringify(this.state.attacks)),
+            time : this.state.time,
+        };
+        console.log(sim);
         worker.onmessage = (ev: MessageEvent) => {
             this.graph.doChart(ev.data);
             worker.terminate();
@@ -50,15 +51,31 @@ class DamagePlotter extends React.Component<PlotterData,any> {
         worker.postMessage(sim);
     }
 
+    onChangeTime = (evt) => {
+        this.setState({time : Number(evt.target.value)});
+    }
+
     render() {
-        return <div>
-                <AttackerInputs attacker={this.state.attacker} />
-                <DefenderInputs defender={this.state.defender} resistance={16} absorbtion={0} />
-                <Attacks attacks={this.state.attacks} />
-                <DamageGraph data={this.state.data} ref={graph => {this.graph = graph}} />
-                <input name="" />
-                <a className="waves-effect waves-light btn" onClick={this.createGraph}>Plot</a>
-                <a className="waves-effect waves-light btn" onClick={this.clear}>Clear</a>
+        return <div className="row">
+                <div className="col s12">
+                    <AttackerInputs attacker={this.state.attacker} />
+                </div>
+                <div className="col s12">
+                    <DefenderInputs defender={this.state.defender} resistance={16} absorbtion={0} />
+                </div>
+                <div className="col s12">
+                    <Attacks attacks={this.state.attacks} />
+                </div>
+                <div className="input-field col s12">
+                    <input id="time" name="time" type="number" onChange={this.onChangeTime} value={this.state.time} />
+                    <label htmlFor="time">Time in ??</label>
+
+                    <a className="waves-effect waves-light btn" onClick={this.createGraph}>Plot</a>
+                    <a className="waves-effect waves-light btn" onClick={this.clear}>Clear</a>
+                </div>
+                <div className="col s12">
+                    <DamageGraph data={this.state.data} ref={graph => {this.graph = graph}} />
+                </div>
             </div>
     }
 }

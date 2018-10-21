@@ -29,11 +29,10 @@ interface Defender {
 }
 
 interface Simulation {
-    attacker : Attacker
-    attack : Attack,
-    defender : Defender,
-    time : number,
-    attacks : number
+    attacker: Attacker
+    attacks : Attack[]
+    defender: Defender
+    time : number
 }
 
 enum DamageType {

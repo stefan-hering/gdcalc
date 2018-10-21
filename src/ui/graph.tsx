@@ -21,7 +21,7 @@ class DamageGraph extends React.Component<any,any> {
 
     clear = () => {
         this.data = [];
-        d3.select(this.node()).selectAll("*").remove();
+        d3.select(this.node).selectAll("*").remove();
     }
 
     doChart = (line) => {

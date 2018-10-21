@@ -24,9 +24,15 @@ export class DamageInstanceComponent extends React.Component<DamageInstanceData,
             (document.getElementById("damageType" + this.id));
     }
 
-    onChange = (event : any) => {
+    onChangeValue = (event : any) => {
         let instance = this.state.instance;
-        instance[event.target.name] = Number(event.target.value);
+        instance.value = Number(event.target.value);
+        this.setState({instance: instance});
+    }
+    
+    onChangeType = (event : any) => {
+        let instance = this.state.instance;
+        instance.type = event.target.value;
         this.setState({instance: instance});
     }
 
@@ -35,23 +41,23 @@ export class DamageInstanceComponent extends React.Component<DamageInstanceData,
 
         let counter = 0;
         for(let type in DamageType) {
-            options.push(<option key={counter++} value={type}>{DamageType[type]}</option>)
+            options.push(<option key={counter++} value={DamageType[type]}>{DamageType[type]}</option>)
         }
 
         return (
         <div>
             <div className="input-field col">
-                <select id={"damageType" + this.id}>
+                <select id={"damageType" + this.id} onChange={this.onChangeType}>
                     {options}
                 </select>
                 <label htmlFor={"damageType" + this.id}>Type</label>
             </div>
-                <div className="input-field col">
+            <div className="input-field col">
                 <input id={"damageInstance" + this.id}
-                name="damageInstance" 
-                type="number" 
-                value={this.state.instance.value} 
-                onChange={this.onChange} />
+                    name="damageInstance" 
+                    type="number" 
+                    value={this.state.instance.value} 
+                    onChange={this.onChangeValue} />
                 <label htmlFor={"damageInstance" + this.id}>{this.state.instance.type}</label>
             </div>
         </div>);

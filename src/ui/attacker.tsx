@@ -22,7 +22,7 @@ export class AttackerInputs extends React.Component<AttackerData,any> {
     render() {
         return (
         <div className="row">
-            <h6>Attacker</h6>
+            <h6 className="col s12">Attacker</h6>
             <div className="input-field col">
                 <input id="oa" 
                     name="offensiveAbility" 

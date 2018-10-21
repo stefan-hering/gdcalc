@@ -34,7 +34,7 @@ export class Attacks extends React.Component<AttacksData,AttacksData> {
         return (
         <div className="row">
             {attacks}
-            <a className="waves-effect waves-light btn" onClick={this.addAttack}>Add attack</a>
+            <div className="col s2"><a className="waves-effect waves-light btn" onClick={this.addAttack}>Add attack</a></div>
         </div>);
     }
 }
