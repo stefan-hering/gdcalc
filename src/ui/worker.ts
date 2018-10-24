@@ -10,8 +10,10 @@ ctx.onmessage = (ev) => {
 
     let sim : Simulation = ev.data;
 
-    for(let i = 0; i < 350; i++) {
-        let oa = 500 + 10 * i;
+    let baseOA = sim.attacker.offensiveAbility - 1510;
+
+    for(let i = 0; i < 300; i++) {
+        let oa = baseOA + 10 * i;
         sim.attacker.offensiveAbility = oa;
         values.push({
             "OA" : oa,

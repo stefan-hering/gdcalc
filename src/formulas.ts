@@ -103,7 +103,7 @@ let calculateDamage = (attacker:Attacker, defender:Defender, attack:Attack, hitR
  * @param attackSpeedBonus 
  */
 let attackPerSecond = (weaponModifier:number, attackSpeedBonus) => {
-    return (1 + weaponModifier) + (1 - weaponModifier) * attackSpeedBonus;
+    return (1 + weaponModifier) + (1 - weaponModifier) * (attackSpeedBonus / 100);
 }
 
 export {probabilityToHit,attackPerSecond,calculateHitRoll,calculateDamage,calculateDamageTaken};

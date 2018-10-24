@@ -8,8 +8,9 @@ const index = require("./index.html")
 let attacker:Attacker = {
     offensiveAbility : 2500,
     critDamage : .75,
-    weaponSpeed : 1.12,
+    weaponSpeed : -0.11,
     attackSpeed : 25,
+    castSpeed : 25,
     percentageDamageBonus : {} as {DamageType:number},
     flatDamage : {} as {DamageType:number},
     durationBonus : {} as {DamageType:number}

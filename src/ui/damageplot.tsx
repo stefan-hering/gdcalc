@@ -25,7 +25,7 @@ class DamagePlotter extends React.Component<PlotterData,any> {
             defender : props.defender,
             attacks : props.attacks,
             data : props.data,
-            time : 2000
+            time : 5000
         }
     }
 
@@ -42,7 +42,7 @@ class DamagePlotter extends React.Component<PlotterData,any> {
             attacks : JSON.parse(JSON.stringify(this.state.attacks)),
             time : this.state.time,
         };
-        console.log(sim);
+
         worker.onmessage = (ev: MessageEvent) => {
             this.graph.doChart(ev.data);
             worker.terminate();
@@ -57,10 +57,10 @@ class DamagePlotter extends React.Component<PlotterData,any> {
 
     render() {
         return <div className="row">
-                <div className="col s12">
+                <div className="col s6">
                     <AttackerInputs attacker={this.state.attacker} />
                 </div>
-                <div className="col s12">
+                <div className="col s6">
                     <DefenderInputs defender={this.state.defender} resistance={16} absorbtion={0} />
                 </div>
                 <div className="col s12">
@@ -68,7 +68,7 @@ class DamagePlotter extends React.Component<PlotterData,any> {
                 </div>
                 <div className="input-field col s12">
                     <input id="time" name="time" type="number" onChange={this.onChangeTime} value={this.state.time} />
-                    <label htmlFor="time">Time in ??</label>
+                    <label htmlFor="time">Time in seconds</label>
 
                     <a className="waves-effect waves-light btn" onClick={this.createGraph}>Plot</a>
                     <a className="waves-effect waves-light btn" onClick={this.clear}>Clear</a>

@@ -34,10 +34,9 @@ export class AttackInputs extends React.Component<AttackData,AttackData> {
         }
 
         return (
-        <div className="col s12">
+        <div className="col s6">
             {instances}
-            <a className="waves-effect waves-light btn" onClick={this.addDamageInstance}>Add damage instance</a>
-            <div className="input-field col">
+            <div className="input-field col s3">
                 <input id="weaponDamage" 
                     name="weaponDamage" 
                     type="number" 
@@ -45,6 +44,7 @@ export class AttackInputs extends React.Component<AttackData,AttackData> {
                     onChange={this.onChange} />
                 <label htmlFor="weaponDamage">Weapon damage (in %)</label>
             </div>
+            <a className="waves-effect waves-light btn col s3" onClick={this.addDamageInstance}>Add damage instance</a>
         </div>);
     }
 }

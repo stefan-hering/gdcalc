@@ -45,14 +45,14 @@ export class DamageInstanceComponent extends React.Component<DamageInstanceData,
         }
 
         return (
-        <div>
-            <div className="input-field col">
+        <div className="col s6">
+            <div className="input-field">
                 <select id={"damageType" + this.id} onChange={this.onChangeType}>
                     {options}
                 </select>
                 <label htmlFor={"damageType" + this.id}>Type</label>
             </div>
-            <div className="input-field col">
+            <div className="input-field">
                 <input id={"damageInstance" + this.id}
                     name="damageInstance" 
                     type="number" 

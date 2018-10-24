@@ -18,7 +18,8 @@ export class Attacks extends React.Component<AttacksData,AttacksData> {
         let attacks = this.state.attacks;
         attacks.push({
             damage: [],
-            weaponDamage: 0
+            weaponDamage: 0,
+            isSpell: false,
         });
         this.setState({attacks : attacks});
     }

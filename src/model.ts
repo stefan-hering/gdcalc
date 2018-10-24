@@ -7,11 +7,14 @@ interface Attacker {
     flatDamage: {DamageType:number}
     weaponSpeed: number
     attackSpeed: number
+    castSpeed: number
 }
 
 interface Attack {
     damage: DamageInstance[]
     weaponDamage: number 
+    isSpell: boolean
+    castFrames?: number
 }
 
 interface DamageInstance {
